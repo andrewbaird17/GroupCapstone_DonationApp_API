@@ -32,7 +32,7 @@ namespace Capstone_Donation_API.Controllers
         [HttpGet("{id}")]
         public Donor Get(int id)
         {
-            var donor = _context.Donors.Find(id);
+            var donor = _context.Donors.Include("Address").Include("MedicalHistory").Where(d => d.DonorId == id).FirstOrDefault();
             return donor;
         }
 
