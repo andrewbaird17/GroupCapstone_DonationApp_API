@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Capstone_Donation_API.Data;
+using Capstone_Donation_API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Capstone_Donation_API.Controllers
 {
@@ -12,29 +15,55 @@ namespace Capstone_Donation_API.Controllers
     [ApiController]
     public class DonorController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private ApplicationContext _context;
 
-        private readonly ILogger<DonorController> _logger;
-
-        public DonorController(ILogger<DonorController> logger)
+        public DonorController(ApplicationContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
         public IEnumerable<Donor> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Donor
+            var donorArray = _context.Donors.Include("Address").Include("MedicalHistory").ToArray();
+            return donorArray;
+        }
+
+        [HttpGet("{id}")]
+        public Donor Get(int id)
+        {
+            var donor = _context.Donors.Include("Address").Include("MedicalHistory").Where(d => d.DonorId == id).FirstOrDefault();
+            return donor;
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody]Donor donor)
+        {
+            _context.Donors.Add(donor);
+            _context.SaveChanges();
+            return Ok(donor);
+        }
+
+        [HttpPut]
+        public IActionResult Put([FromBody]Donor donor)
+        {
+            if (ModelState.IsValid)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                _context.Donors.Update(donor);
+                _context.SaveChanges();
+                return Ok(donor);
+            }
+            return BadRequest();
+            
+
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id, [FromBody]Donor donor)
+        {
+            _context.Donors.Remove(donor);
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }
