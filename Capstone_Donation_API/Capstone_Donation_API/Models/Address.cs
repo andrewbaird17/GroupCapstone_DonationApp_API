@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Capstone_Donation_API.Model
+namespace Capstone_Donation_API.Models
 {
     public class Address
     {

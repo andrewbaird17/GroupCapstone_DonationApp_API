@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Capstone_Donation_API
+namespace Capstone_Donation_API.Models
 {
     public class Donor
     {
