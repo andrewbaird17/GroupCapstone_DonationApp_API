@@ -11,10 +11,6 @@ namespace Capstone_Donation_API.Models
     {
         [Key]
         public int AddressID { get; set; }
-
-        [ForeignKey("Donor")]
-        public int DonorId { get; set; }
-        public Donor Donor { get; set; }
         public string StreetName { get; set; }
         public string City { get; set; }
         public string State { get; set; }
