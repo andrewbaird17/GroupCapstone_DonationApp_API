@@ -12,6 +12,10 @@ namespace Capstone_Donation_API.Models
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public Address Address { get; set; }
+
+        [ForeignKey("MedicalHistory")]
+        public int MedicalId { get; set; }
+        public MedicalHistory MedicalHistory { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }

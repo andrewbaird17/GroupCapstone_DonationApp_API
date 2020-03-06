@@ -11,10 +11,6 @@ namespace Capstone_Donation_API.Models
     {
         [Key]
         public int MedicalId {get; set;}
-
-        [ForeignKey("Donor")]
-        public int DonorId { get; set; }
-        public Donor Donor { get; set; }
         public int Age { get; set; }
         public int Height { get; set; }
         public int Weight { get; set; }

@@ -135,9 +135,14 @@ namespace Capstone_Donation_API.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MedicalId")
+                        .HasColumnType("int");
+
                     b.HasKey("DonorId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("MedicalId");
 
                     b.ToTable("Donors");
 
@@ -148,7 +153,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 1,
                             FirstName = "jerry",
                             IsActive = true,
-                            LastName = "griswold"
+                            LastName = "griswold",
+                            MedicalId = 1
                         },
                         new
                         {
@@ -156,7 +162,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 1,
                             FirstName = "mary",
                             IsActive = true,
-                            LastName = "griswold"
+                            LastName = "griswold",
+                            MedicalId = 2
                         },
                         new
                         {
@@ -164,7 +171,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 2,
                             FirstName = "lisa",
                             IsActive = true,
-                            LastName = "anderhal"
+                            LastName = "anderhal",
+                            MedicalId = 3
                         },
                         new
                         {
@@ -172,7 +180,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 3,
                             FirstName = "lucas",
                             IsActive = true,
-                            LastName = "allen"
+                            LastName = "allen",
+                            MedicalId = 4
                         },
                         new
                         {
@@ -180,7 +189,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 4,
                             FirstName = "marissa",
                             IsActive = true,
-                            LastName = "gabel"
+                            LastName = "gabel",
+                            MedicalId = 5
                         },
                         new
                         {
@@ -188,7 +198,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 5,
                             FirstName = "jessica",
                             IsActive = true,
-                            LastName = "sievers"
+                            LastName = "sievers",
+                            MedicalId = 6
                         },
                         new
                         {
@@ -196,7 +207,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 6,
                             FirstName = "trevor",
                             IsActive = true,
-                            LastName = "smith"
+                            LastName = "smith",
+                            MedicalId = 7
                         },
                         new
                         {
@@ -204,7 +216,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 7,
                             FirstName = "lucy",
                             IsActive = true,
-                            LastName = "olson"
+                            LastName = "olson",
+                            MedicalId = 8
                         },
                         new
                         {
@@ -212,7 +225,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 8,
                             FirstName = "gabe",
                             IsActive = true,
-                            LastName = "neuman"
+                            LastName = "neuman",
+                            MedicalId = 9
                         },
                         new
                         {
@@ -220,7 +234,8 @@ namespace Capstone_Donation_API.Migrations
                             AddressId = 9,
                             FirstName = "phil",
                             IsActive = true,
-                            LastName = "jefferson"
+                            LastName = "jefferson",
+                            MedicalId = 10
                         });
                 });
 
@@ -236,9 +251,6 @@ namespace Capstone_Donation_API.Migrations
 
                     b.Property<string>("BloodType")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DonorId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Ethnicity")
                         .HasColumnType("nvarchar(max)");
@@ -260,8 +272,6 @@ namespace Capstone_Donation_API.Migrations
 
                     b.HasKey("MedicalId");
 
-                    b.HasIndex("DonorId");
-
                     b.ToTable("MedicalHistories");
 
                     b.HasData(
@@ -270,7 +280,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 1,
                             Age = 56,
                             BloodType = "a+",
-                            DonorId = 1,
                             Ethnicity = "white",
                             HasAllergies = false,
                             Height = 66,
@@ -283,7 +292,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 2,
                             Age = 53,
                             BloodType = "b-",
-                            DonorId = 2,
                             Ethnicity = "white",
                             HasAllergies = false,
                             Height = 50,
@@ -296,7 +304,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 3,
                             Age = 24,
                             BloodType = "b+",
-                            DonorId = 3,
                             Ethnicity = "african american",
                             HasAllergies = true,
                             Height = 59,
@@ -309,7 +316,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 4,
                             Age = 33,
                             BloodType = "o+",
-                            DonorId = 4,
                             Ethnicity = "white",
                             HasAllergies = true,
                             Height = 48,
@@ -322,7 +328,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 5,
                             Age = 75,
                             BloodType = "o-",
-                            DonorId = 5,
                             Ethnicity = " native american/alaskan native",
                             HasAllergies = false,
                             Height = 53,
@@ -335,7 +340,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 6,
                             Age = 64,
                             BloodType = "ab+",
-                            DonorId = 6,
                             Ethnicity = "pacific islander",
                             HasAllergies = true,
                             Height = 63,
@@ -348,7 +352,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 7,
                             Age = 19,
                             BloodType = "ab-",
-                            DonorId = 7,
                             Ethnicity = "white",
                             HasAllergies = false,
                             Height = 56,
@@ -361,7 +364,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 8,
                             Age = 44,
                             BloodType = "a-",
-                            DonorId = 8,
                             Ethnicity = "asian",
                             HasAllergies = true,
                             Height = 49,
@@ -374,7 +376,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 9,
                             Age = 22,
                             BloodType = "ab-",
-                            DonorId = 9,
                             Ethnicity = "native hawaiian",
                             HasAllergies = false,
                             Height = 65,
@@ -387,7 +388,6 @@ namespace Capstone_Donation_API.Migrations
                             MedicalId = 10,
                             Age = 30,
                             BloodType = "ab+",
-                            DonorId = 10,
                             Ethnicity = "white",
                             HasAllergies = false,
                             Height = 55,
@@ -404,13 +404,10 @@ namespace Capstone_Donation_API.Migrations
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Capstone_Donation_API.Models.MedicalHistory", b =>
-                {
-                    b.HasOne("Capstone_Donation_API.Models.Donor", "Donor")
+                    b.HasOne("Capstone_Donation_API.Models.MedicalHistory", "MedicalHistory")
                         .WithMany()
-                        .HasForeignKey("DonorId")
+                        .HasForeignKey("MedicalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

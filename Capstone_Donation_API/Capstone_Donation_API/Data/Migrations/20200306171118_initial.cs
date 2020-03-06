@@ -23,12 +23,33 @@ namespace Capstone_Donation_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MedicalHistories",
+                columns: table => new
+                {
+                    MedicalId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Age = table.Column<int>(nullable: false),
+                    Height = table.Column<int>(nullable: false),
+                    Weight = table.Column<int>(nullable: false),
+                    BloodType = table.Column<string>(nullable: true),
+                    OnMedications = table.Column<bool>(nullable: false),
+                    HasAllergies = table.Column<bool>(nullable: false),
+                    IsMale = table.Column<bool>(nullable: false),
+                    Ethnicity = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedicalHistories", x => x.MedicalId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Donors",
                 columns: table => new
                 {
                     DonorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AddressId = table.Column<int>(nullable: false),
+                    MedicalId = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false)
@@ -42,32 +63,11 @@ namespace Capstone_Donation_API.Migrations
                         principalTable: "Addresses",
                         principalColumn: "AddressID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MedicalHistories",
-                columns: table => new
-                {
-                    MedicalId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DonorId = table.Column<int>(nullable: false),
-                    Age = table.Column<int>(nullable: false),
-                    Height = table.Column<int>(nullable: false),
-                    Weight = table.Column<int>(nullable: false),
-                    BloodType = table.Column<string>(nullable: true),
-                    OnMedications = table.Column<bool>(nullable: false),
-                    HasAllergies = table.Column<bool>(nullable: false),
-                    IsMale = table.Column<bool>(nullable: false),
-                    Ethnicity = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MedicalHistories", x => x.MedicalId);
                     table.ForeignKey(
-                        name: "FK_MedicalHistories_Donors_DonorId",
-                        column: x => x.DonorId,
-                        principalTable: "Donors",
-                        principalColumn: "DonorId",
+                        name: "FK_Donors_MedicalHistories_MedicalId",
+                        column: x => x.MedicalId,
+                        principalTable: "MedicalHistories",
+                        principalColumn: "MedicalId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -88,37 +88,37 @@ namespace Capstone_Donation_API.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Donors",
-                columns: new[] { "DonorId", "AddressId", "FirstName", "IsActive", "LastName" },
+                table: "MedicalHistories",
+                columns: new[] { "MedicalId", "Age", "BloodType", "Ethnicity", "HasAllergies", "Height", "IsMale", "OnMedications", "Weight" },
                 values: new object[,]
                 {
-                    { 1, 1, "jerry", true, "griswold" },
-                    { 2, 1, "mary", true, "griswold" },
-                    { 3, 2, "lisa", true, "anderhal" },
-                    { 4, 3, "lucas", true, "allen" },
-                    { 5, 4, "marissa", true, "gabel" },
-                    { 6, 5, "jessica", true, "sievers" },
-                    { 7, 6, "trevor", true, "smith" },
-                    { 8, 7, "lucy", true, "olson" },
-                    { 9, 8, "gabe", true, "neuman" },
-                    { 10, 9, "phil", true, "jefferson" }
+                    { 8, 44, "a-", "asian", true, 49, false, true, 285 },
+                    { 7, 19, "ab-", "white", false, 56, true, true, 185 },
+                    { 6, 64, "ab+", "pacific islander", true, 63, false, false, 137 },
+                    { 5, 75, "o-", " native american/alaskan native", false, 53, false, false, 118 },
+                    { 1, 56, "a+", "white", false, 66, true, false, 205 },
+                    { 3, 24, "b+", "african american", true, 59, false, false, 180 },
+                    { 2, 53, "b-", "white", false, 50, false, true, 140 },
+                    { 9, 22, "ab-", "native hawaiian", false, 65, true, false, 155 },
+                    { 4, 33, "o+", "white", true, 48, true, true, 345 },
+                    { 10, 30, "ab+", "white", false, 55, true, true, 170 }
                 });
 
             migrationBuilder.InsertData(
-                table: "MedicalHistories",
-                columns: new[] { "MedicalId", "Age", "BloodType", "DonorId", "Ethnicity", "HasAllergies", "Height", "IsMale", "OnMedications", "Weight" },
+                table: "Donors",
+                columns: new[] { "DonorId", "AddressId", "FirstName", "IsActive", "LastName", "MedicalId" },
                 values: new object[,]
                 {
-                    { 1, 56, "a+", 1, "white", false, 66, true, false, 205 },
-                    { 2, 53, "b-", 2, "white", false, 50, false, true, 140 },
-                    { 3, 24, "b+", 3, "african american", true, 59, false, false, 180 },
-                    { 4, 33, "o+", 4, "white", true, 48, true, true, 345 },
-                    { 5, 75, "o-", 5, " native american/alaskan native", false, 53, false, false, 118 },
-                    { 6, 64, "ab+", 6, "pacific islander", true, 63, false, false, 137 },
-                    { 7, 19, "ab-", 7, "white", false, 56, true, true, 185 },
-                    { 8, 44, "a-", 8, "asian", true, 49, false, true, 285 },
-                    { 9, 22, "ab-", 9, "native hawaiian", false, 65, true, false, 155 },
-                    { 10, 30, "ab+", 10, "white", false, 55, true, true, 170 }
+                    { 1, 1, "jerry", true, "griswold", 1 },
+                    { 2, 1, "mary", true, "griswold", 2 },
+                    { 3, 2, "lisa", true, "anderhal", 3 },
+                    { 4, 3, "lucas", true, "allen", 4 },
+                    { 5, 4, "marissa", true, "gabel", 5 },
+                    { 6, 5, "jessica", true, "sievers", 6 },
+                    { 7, 6, "trevor", true, "smith", 7 },
+                    { 8, 7, "lucy", true, "olson", 8 },
+                    { 9, 8, "gabe", true, "neuman", 9 },
+                    { 10, 9, "phil", true, "jefferson", 10 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -127,21 +127,21 @@ namespace Capstone_Donation_API.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicalHistories_DonorId",
-                table: "MedicalHistories",
-                column: "DonorId");
+                name: "IX_Donors_MedicalId",
+                table: "Donors",
+                column: "MedicalId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MedicalHistories");
-
-            migrationBuilder.DropTable(
                 name: "Donors");
 
             migrationBuilder.DropTable(
                 name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "MedicalHistories");
         }
     }
 }
