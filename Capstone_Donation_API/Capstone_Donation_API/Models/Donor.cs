@@ -7,14 +7,14 @@ namespace Capstone_Donation_API.Models
     public class Donor
     {
         [Key]
-        public int DonorId { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Address")]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         public Address Address { get; set; }
 
         [ForeignKey("MedicalHistory")]
-        public int MedicalId { get; set; }
+        public int? MedicalId { get; set; }
         public MedicalHistory MedicalHistory { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -10,10 +10,10 @@ namespace Capstone_Donation_API.Models
     public class Address
     {
         [Key]
-        public int AddressID { get; set; }
+        public int Id { get; set; }
         public string StreetName { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public int ZipCode { get; set; }
+        public int? ZipCode { get; set; }
     }
 }
