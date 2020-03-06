@@ -63,7 +63,7 @@ namespace Capstone_Donation_API.Controllers
         {
             _context.Donors.Remove(donor);
             _context.SaveChanges();
-            return Ok();
+            return Ok(donor);
         }
     }
 }
