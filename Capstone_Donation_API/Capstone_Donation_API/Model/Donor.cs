@@ -2,7 +2,7 @@ using System;
 
 namespace Capstone_Donation_API
 {
-    public class WeatherForecast
+    public class Donor
     {
         public DateTime Date { get; set; }
 
