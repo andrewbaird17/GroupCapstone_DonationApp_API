@@ -64,5 +64,5 @@ namespace Capstone_Donation_API.Controllers
             return Ok(medicalHistory);
         }
     }
-    }
+    
 }
