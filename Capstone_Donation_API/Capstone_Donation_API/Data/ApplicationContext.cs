@@ -29,13 +29,13 @@ namespace Capstone_Donation_API.Data
                 new Donor { Id = 10, AddressId = 7, MedicalId = null, FirstName = "phil", LastName = "jefferson", IsActive = true }
                 ) ;
             modelBuilder.Entity<Address>().HasData(
-                new Address { Id = 1, StreetName = "329 e pleasant st", City = "oconomowoc", State = "wi", ZipCode = 53066 },
-                new Address { Id = 2, StreetName = "324 s second st", City = "milwaukee", State = "wi", ZipCode = 53204 },
-                new Address { Id = 3, StreetName = "2100 n kilian pl", City = "milwaukee", State = "wi", ZipCode = 53212 },
-                new Address { Id = 4, StreetName = "1427 s 75th st", City = "west allis", State = "wi", ZipCode = 53214 },
-                new Address { Id = 5, StreetName = "874 havenshire rd", City = "naperville", State = "il", ZipCode = 60565 },
-                new Address { Id = 6, StreetName = "177 mcknight rd n", City = "st paul", State = "mn", ZipCode = 55119 },
-                new Address { Id = 7, StreetName = "1105 57th st", City = "kenosha", State = "wi", ZipCode = 53140 }
+                new Address { Id = 1, StreetAddress = "329 e pleasant st", City = "oconomowoc", State = "wi", ZipCode = 53066 },
+                new Address { Id = 2, StreetAddress = "324 s second st", City = "milwaukee", State = "wi", ZipCode = 53204 },
+                new Address { Id = 3, StreetAddress = "2100 n kilian pl", City = "milwaukee", State = "wi", ZipCode = 53212 },
+                new Address { Id = 4, StreetAddress = "1427 s 75th st", City = "west allis", State = "wi", ZipCode = 53214 },
+                new Address { Id = 5, StreetAddress = "874 havenshire rd", City = "naperville", State = "il", ZipCode = 60565 },
+                new Address { Id = 6, StreetAddress = "177 mcknight rd n", City = "st paul", State = "mn", ZipCode = 55119 },
+                new Address { Id = 7, StreetAddress = "1105 57th st", City = "kenosha", State = "wi", ZipCode = 53140 }
                 );
             modelBuilder.Entity<MedicalHistory>().HasData(
                 new MedicalHistory { Id = 1, Age = 56, Height = 66, Weight = 205, BloodType = "a+", IsMale = true, Ethnicity = "white", HasAllergies = false, OnMedications = false },

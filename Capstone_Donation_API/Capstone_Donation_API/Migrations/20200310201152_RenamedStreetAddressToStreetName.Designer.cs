@@ -4,14 +4,16 @@ using Capstone_Donation_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone_Donation_API.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200310201152_RenamedStreetAddressToStreetName")]
+    partial class RenamedStreetAddressToStreetName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,7 @@ namespace Capstone_Donation_API.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StreetAddress")
+                    b.Property<string>("StreetName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ZipCode")
@@ -48,7 +50,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 1,
                             City = "oconomowoc",
                             State = "wi",
-                            StreetAddress = "329 e pleasant st",
+                            StreetName = "329 e pleasant st",
                             ZipCode = 53066
                         },
                         new
@@ -56,7 +58,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 2,
                             City = "milwaukee",
                             State = "wi",
-                            StreetAddress = "324 s second st",
+                            StreetName = "324 s second st",
                             ZipCode = 53204
                         },
                         new
@@ -64,7 +66,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 3,
                             City = "milwaukee",
                             State = "wi",
-                            StreetAddress = "2100 n kilian pl",
+                            StreetName = "2100 n kilian pl",
                             ZipCode = 53212
                         },
                         new
@@ -72,7 +74,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 4,
                             City = "west allis",
                             State = "wi",
-                            StreetAddress = "1427 s 75th st",
+                            StreetName = "1427 s 75th st",
                             ZipCode = 53214
                         },
                         new
@@ -80,7 +82,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 5,
                             City = "naperville",
                             State = "il",
-                            StreetAddress = "874 havenshire rd",
+                            StreetName = "874 havenshire rd",
                             ZipCode = 60565
                         },
                         new
@@ -88,7 +90,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 6,
                             City = "st paul",
                             State = "mn",
-                            StreetAddress = "177 mcknight rd n",
+                            StreetName = "177 mcknight rd n",
                             ZipCode = 55119
                         },
                         new
@@ -96,7 +98,7 @@ namespace Capstone_Donation_API.Migrations
                             Id = 7,
                             City = "kenosha",
                             State = "wi",
-                            StreetAddress = "1105 57th st",
+                            StreetName = "1105 57th st",
                             ZipCode = 53140
                         });
                 });

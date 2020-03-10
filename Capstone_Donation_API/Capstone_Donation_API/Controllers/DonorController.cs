@@ -47,15 +47,15 @@ namespace Capstone_Donation_API.Controllers
         [HttpPut]
         public IActionResult Put([FromBody]Donor donor)
         {
+            var donorinDB = _context.Donors.Where(d => d.IdentityUserId == donor.IdentityUserId).FirstOrDefault();
             if (ModelState.IsValid)
             {
+                donorinDB = donor;
                 _context.Donors.Update(donor);
                 _context.SaveChanges();
                 return Ok(donor);
             }
             return BadRequest();
-            
-
         }
 
         [HttpDelete]
