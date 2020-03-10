@@ -19,6 +19,7 @@ namespace Capstone_Donation_API.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }
+        public string IdentityUserId { get; set; }
 
     }
 }

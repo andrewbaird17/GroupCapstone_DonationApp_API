@@ -4,14 +4,16 @@ using Capstone_Donation_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone_Donation_API.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200310150432_AddedUserIdentityIdAsAStringToDonor")]
+    partial class AddedUserIdentityIdAsAStringToDonor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,9 +116,6 @@ namespace Capstone_Donation_API.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -125,6 +124,9 @@ namespace Capstone_Donation_API.Migrations
 
                     b.Property<int?>("MedicalId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserIdentityId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
