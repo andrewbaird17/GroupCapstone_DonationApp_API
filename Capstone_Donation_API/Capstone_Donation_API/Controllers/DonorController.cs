@@ -79,6 +79,7 @@ namespace Capstone_Donation_API.Controllers
                         .Where(m => m.Height == donor.MedicalHistory.Height).Where(m => m.IsMale == donor.MedicalHistory.IsMale)
                         .Where(m => m.OnMedications == donor.MedicalHistory.OnMedications).Where(m => m.Weight == donor.MedicalHistory.Weight).FirstOrDefault();
                     donorinDB.MedicalId = medicalInDB.Id;
+                    donorinDB.IsActive = true;
                 }
                 else
                 {
