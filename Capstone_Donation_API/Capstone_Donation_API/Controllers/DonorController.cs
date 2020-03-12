@@ -7,10 +7,11 @@ using Microsoft.Extensions.Logging;
 using Capstone_Donation_API.Data;
 using Capstone_Donation_API.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 
 namespace Capstone_Donation_API.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class DonorController : ControllerBase
@@ -54,40 +55,45 @@ namespace Capstone_Donation_API.Controllers
                 donorinDB.LastName = donor.LastName;
                 if (donorinDB.AddressId == null)
                 {
-                    Address newAddress = new Address();
-                    newAddress = donor.Address;
-                    _context.Addresses.Add(newAddress);
-                    _context.SaveChanges();
-                    var addressInDB = _context.Addresses.Where(a => a.StreetAddress == donor.Address.StreetAddress).Where(a => a.City == donor.Address.City)
-                        .Where(a => a.State == donor.Address.State).Where(a => a.ZipCode == donor.Address.ZipCode).FirstOrDefault();
+                    AddAddressToDB(donor.Address);
+                    var addressInDB = GetAddressFromDB(donor.Address);
                     donorinDB.AddressId = addressInDB.Id;
                 }
                 else
                 {
-                    var addressInDB = _context.Addresses.Where(a => a.StreetAddress == donor.Address.StreetAddress).Where(a => a.City == donor.Address.City)
-                        .Where(a => a.State == donor.Address.State).Where(a => a.ZipCode == donor.Address.ZipCode).FirstOrDefault();
-                    donorinDB.AddressId = addressInDB.Id;
+                    var addressInDB = GetAddressFromDB(donor.Address);
+                    if (addressInDB == null)
+                    {
+                        AddAddressToDB(donor.Address);
+                        var changedAddressInDB = GetAddressFromDB(donor.Address);
+                        donorinDB.AddressId = changedAddressInDB.Id;
+                    }
+                    else
+                    {
+                        donorinDB.AddressId = addressInDB.Id;
+                    }
                 }
                 if (donorinDB.MedicalId == null)
                 {
-                    MedicalHistory newMedical = new MedicalHistory();
-                    newMedical = donor.MedicalHistory;
-                    _context.MedicalHistories.Add(newMedical);
-                    _context.SaveChanges();
-                    var medicalInDB = _context.MedicalHistories.Where(m => m.Age == donor.MedicalHistory.Age).Where(m => m.BloodType == donor.MedicalHistory.BloodType)
-                        .Where(m => m.Ethnicity == donor.MedicalHistory.Ethnicity).Where(m => m.HasAllergies == donor.MedicalHistory.HasAllergies)
-                        .Where(m => m.Height == donor.MedicalHistory.Height).Where(m => m.IsMale == donor.MedicalHistory.IsMale)
-                        .Where(m => m.OnMedications == donor.MedicalHistory.OnMedications).Where(m => m.Weight == donor.MedicalHistory.Weight).FirstOrDefault();
+                    AddMedicalInfoToDB(donor.MedicalHistory);
+                    var medicalInDB = GetMedicalInfoFromDB(donor.MedicalHistory);
                     donorinDB.MedicalId = medicalInDB.Id;
                     donorinDB.IsActive = true;
                 }
                 else
                 {
-                    var medicalInDB = _context.MedicalHistories.Where(m => m.Age == donor.MedicalHistory.Age).Where(m => m.BloodType == donor.MedicalHistory.BloodType)
-                        .Where(m => m.Ethnicity == donor.MedicalHistory.Ethnicity).Where(m => m.HasAllergies == donor.MedicalHistory.HasAllergies)
-                        .Where(m => m.Height == donor.MedicalHistory.Height).Where(m => m.IsMale == donor.MedicalHistory.IsMale)
-                        .Where(m => m.OnMedications == donor.MedicalHistory.OnMedications).Where(m => m.Weight == donor.MedicalHistory.Weight).FirstOrDefault();
-                    donorinDB.MedicalId = medicalInDB.Id;
+                    var medicalInDB = GetMedicalInfoFromDB(donor.MedicalHistory);
+                    if (medicalInDB == null)
+                    {
+                        AddMedicalInfoToDB(donor.MedicalHistory);
+                        var changedMedicalInDB = GetMedicalInfoFromDB(donor.MedicalHistory);
+                        donorinDB.MedicalId = changedMedicalInDB.Id;
+                        donorinDB.IsActive = true;
+                    }
+                    else
+                    {
+                        donorinDB.MedicalId = medicalInDB.Id;
+                    }
                 }
                 _context.Donors.Update(donorinDB);
                 _context.SaveChanges();
@@ -103,5 +109,49 @@ namespace Capstone_Donation_API.Controllers
             _context.SaveChanges();
             return Ok(donor);
         }
+
+        public void AddAddressToDB(Address address)
+        {
+            Address newAddress = new Address();
+            newAddress = address;
+            _context.Addresses.Add(newAddress);
+            _context.SaveChanges();
+        }
+
+        public void AddMedicalInfoToDB(MedicalHistory medicalHistory)
+        {
+            MedicalHistory newMedical = new MedicalHistory();
+            newMedical = medicalHistory;
+            _context.MedicalHistories.Add(newMedical);
+            _context.SaveChanges();
+        }
+
+        public Address GetAddressFromDB(Address address)
+        {
+            var addressInDB = _context.Addresses.Where(a => a.StreetAddress == address.StreetAddress).Where(a => a.City == address.City)
+                        .Where(a => a.State == address.State).Where(a => a.ZipCode == address.ZipCode).FirstOrDefault();
+            return addressInDB;
+        }
+
+        public MedicalHistory GetMedicalInfoFromDB(MedicalHistory medicalHistory)
+        {
+            var medicalInDB = _context.MedicalHistories.Where(m => m.Age == medicalHistory.Age).Where(m => m.BloodType == medicalHistory.BloodType)
+                        .Where(m => m.Ethnicity == medicalHistory.Ethnicity).Where(m => m.HasAllergies == medicalHistory.HasAllergies)
+                        .Where(m => m.Height == medicalHistory.Height).Where(m => m.IsMale == medicalHistory.IsMale)
+                        .Where(m => m.OnMedications == medicalHistory.OnMedications).Where(m => m.Weight == medicalHistory.Weight).FirstOrDefault();
+            return medicalInDB;
+        }
+
+        //public async Task GetLatAndLongAsync(Address address)
+        //{
+        //    string fullAddress = address.StreetAddress + ", " + address.City + ", " + address.State + " " + address.ZipCode;
+        //    string url = "https://maps.googleapis.com/maps/api/geocode/json?address="+fullAddress+"&key="+API_Key.Googlekey;
+        //    using (HttpClient googleClient = new HttpClient())
+        //    {
+        //        HttpResponseMessage response = await googleClient.GetAsync(url);
+        //        var data = await response.Content.ReadAsStringAsync();
+
+        //    }
+        //}
     }
 }
