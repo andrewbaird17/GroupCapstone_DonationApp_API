@@ -8,6 +8,8 @@ using Capstone_Donation_API.Data;
 using Capstone_Donation_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Capstone_Donation_API.Controllers
 {
@@ -141,17 +143,5 @@ namespace Capstone_Donation_API.Controllers
                         .Where(m => m.OnMedications == medicalHistory.OnMedications).Where(m => m.Weight == medicalHistory.Weight).FirstOrDefault();
             return medicalInDB;
         }
-
-        //public async Task GetLatAndLongAsync(Address address)
-        //{
-        //    string fullAddress = address.StreetAddress + ", " + address.City + ", " + address.State + " " + address.ZipCode;
-        //    string url = "https://maps.googleapis.com/maps/api/geocode/json?address="+fullAddress+"&key="+API_Key.Googlekey;
-        //    using (HttpClient googleClient = new HttpClient())
-        //    {
-        //        HttpResponseMessage response = await googleClient.GetAsync(url);
-        //        var data = await response.Content.ReadAsStringAsync();
-
-        //    }
-        //}
     }
 }
